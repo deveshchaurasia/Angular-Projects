@@ -1,0 +1,14 @@
+<a class="list-group-item clearfix" (click)="onSelected()">
+    <div class="row">
+        <div class="col-4">
+            <img [src]="recipe.imagePath"
+                class="img-responsive" style="max-width:100%;
+                max-height: 100px;">
+        </div>
+        <div class="col-7">
+            <h5 class="list-group-item-heading">{{ recipe.name }}</h5>
+            <p class="card-text"> {{ recipe.description }} </p>
+        </div>
+    </div>
+</a>
+<hr>
