@@ -1,0 +1,27 @@
+<div mat-dialog-title class="flex-container advance-dialog">
+    <div class="advance-head mr-3">
+        <h4>Add Server</h4>
+    </div>
+    <button mat-icon-button class="close-icon" (click)="close()">
+        <span class="btn btn-danger">close</span>
+    </button>
+</div>
+
+<div class="container">
+    <form [formGroup]="serverForm" (ngSubmit)="addServer()">
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Server Name</label>
+            <input matInput type="text" class="form-control" id="exampleFormControlInput1" formControlName="name">
+            <p class="red-text" *ngIf="serverForm.controls['name'].hasError('required') && serverForm.controls['name'].touched">Name Required</p>
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlTextarea1" class="form-label">Server Description</label>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" formControlName="desc"></textarea>
+        </div>
+
+        <div>
+            <button class="btn btn-primary" type="submit">Submit</button>
+            <button class="btn btn-danger" (click)="close()">Cancel</button>
+        </div>
+      </form>
+</div>

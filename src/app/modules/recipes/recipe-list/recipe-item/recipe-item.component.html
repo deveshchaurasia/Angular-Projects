@@ -1,4 +1,4 @@
-<a class="list-group-item clearfix" (click)="onSelected()">
+<a class="list-group-item active" (click)="onSelected()">
     <div class="row">
         <div class="col-4">
             <img [src]="recipe.imagePath"
@@ -7,7 +7,7 @@
         </div>
         <div class="col-7">
             <h5 class="list-group-item-heading">{{ recipe.name }}</h5>
-            <p class="card-text"> {{ recipe.description }} </p>
+            <p class="card-text"> {{ recipe.description.substring(0,100)+'...' }} </p>
         </div>
     </div>
 </a>

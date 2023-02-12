@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="row">
+        <div class="col my-2">
+            <button class="btn btn-success" (click)="addServer()">New Server</button>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-4">
+            <ol class="list-group list-group-numbered">
+              <!-- <a *ngFor="let server of servers" (click)="loadServer(server)"> -->
+                <a *ngFor="let server of servers" [routerLink]="['server', server.id]" style="text-decoration: none;">
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                  <div class="ms-2 me-auto">
+                    <div class="fw-bold">{{ server.name }}</div>
+                    {{ server.desc }}
+                  </div>
+                  <span class="badge bg-primary rounded-pill">{{server.id}}</span>
+                </li>
+                </a>
+              </ol>
+        </div>
+        <div class="col-8">
+            <!-- <app-server [server]="selectedServer"></app-server> -->
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

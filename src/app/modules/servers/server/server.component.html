@@ -1,0 +1,24 @@
+<div class="card" *ngIf="server;else infoTemp">
+  <div class="card-body">
+    <h5 class="card-title">{{ server.name }}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">{{ server.desc}}</h6>
+  </div>
+  <h2>Edit Server</h2>
+  <form [formGroup]="serverForm" (ngSubmit)="editServer()">
+    <div class="mb-3">
+        <mat-label for="exampleFormControlInput1" class="form-label">Server Name</mat-label>
+        <input matInput type="text" class="form-control" id="exampleFormControlInput1" formControlName="name">
+        <p class="red-text" *ngIf="serverForm.controls['name'].hasError('required') && serverForm.controls['name'].touched">Name Required</p>
+    </div>
+    <div class="mb-3">
+      <label for="exampleFormControlTextarea1" class="form-label">Server Description</label>
+      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" formControlName="desc"></textarea>
+    </div>
+    <button class="btn btn-primary" type="submit">Submit</button>
+  </form>
+</div>
+<div>
+  <ng-template #infoTemp>
+    Please select your server!
+  </ng-template>
+</div>
