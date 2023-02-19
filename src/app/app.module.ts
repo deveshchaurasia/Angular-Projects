@@ -14,6 +14,8 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { DirectiveModules } from './shared/directives';
 import { AuthService } from './shared/services/auth.service';
 import { AuthGuard } from './shared/guards/auth-guard.service';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './shared/services/AuthInterceptor';
 
 @NgModule({
   declarations: [
@@ -28,10 +30,11 @@ import { AuthGuard } from './shared/guards/auth-guard.service';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    DirectiveModules
+    DirectiveModules,
+    HttpClientModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
-  providers: [SpinnerService, AuthService, AuthGuard],
+  providers: [SpinnerService, AuthService, AuthGuard, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

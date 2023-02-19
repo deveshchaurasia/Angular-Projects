@@ -43,6 +43,11 @@ export class RecipeService {
         this.recipeChanged.next(this.recipes);
     }
 
+    setRecipes(recipes:Recipe[]){
+        this.recipes = recipes;
+        this.recipeChanged.next(this.recipes);
+    }
+
     addRecipe(recipe:Recipe){
         let newRecipe:Recipe = {
             ...recipe,
