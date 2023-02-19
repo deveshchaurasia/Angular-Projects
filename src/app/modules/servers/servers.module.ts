@@ -5,9 +5,12 @@ import { ServersComponent } from "./servers.component";
 import { ServerComponent } from './server/server.component';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
+import { DirectiveModules } from "src/app/shared/directives";
+import { AuthGuard } from "src/app/shared/guards/auth-guard.service";
+import { AuthService } from "src/app/shared/services/auth.service";
 
 const routes: Routes = [
-    { path: '', component: ServersComponent, children: [
+    { path: '', component: ServersComponent, canActivateChild: [AuthGuard], children: [
         {path: 'server/:id', component: ServerComponent}
     ]}
 ]
@@ -24,7 +27,8 @@ const routes: Routes = [
         FormsModule,
         ReactiveFormsModule,
         RouterModule.forChild(routes),
-        MatFormFieldModule
+        MatFormFieldModule,
+        DirectiveModules
     ]
 })
 export class ServersModule {

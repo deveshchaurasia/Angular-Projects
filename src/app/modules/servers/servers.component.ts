@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { DynamicComponentsComponent } from 'src/app/dynamic-components/dynamic-components.component';
 import { Server } from 'src/app/shared/models/server.model';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { ServerService } from 'src/app/shared/services/servers.service';
 import { SpinnerService } from 'src/app/shared/services/spinnerService';
 
@@ -15,12 +16,17 @@ export class ServersComponent implements OnInit {
 
   servers:Server[];
   selectedServer:Server;
+  todayDate = new Date();
+  asyncText:any;
+  filterText:string;
+  serverLoggedIn:boolean = false;
   constructor(
     private serverService:ServerService, 
     private router:Router, 
     private route:ActivatedRoute, 
     private loader: SpinnerService,
-    private dialog:MatDialog
+    private dialog:MatDialog,
+    private authService:AuthService
     ) { }
 
   ngOnInit(): void {
@@ -30,6 +36,11 @@ export class ServersComponent implements OnInit {
       if(this.selectedServer){
         this.selectedServer = this.servers.find(v=>v.id==this.selectedServer.id);
       }
+    })
+    this.asyncText = new Promise((resolve,reject)=>{
+      setTimeout(()=>{
+        resolve('server started')
+      },2000)
     })
   }
 
@@ -50,5 +61,14 @@ export class ServersComponent implements OnInit {
         }
       }
     })
+  }
+
+  login(){
+    this.authService.login();
+    this.serverLoggedIn = true;
+  }
+  logout(){
+    this.authService.logout();
+    this.serverLoggedIn = false;
   }
 }

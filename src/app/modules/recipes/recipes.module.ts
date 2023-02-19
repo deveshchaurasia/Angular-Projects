@@ -8,13 +8,16 @@ import { RecipeItemComponent } from './recipe-list/recipe-item/recipe-item.compo
 import { EditRecipeComponent } from './edit-recipe/edit-recipe.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RecipeEditModule } from './edit-recipe/recipe-edit.module';
+import { DirectiveModules } from 'src/app/shared/directives';
+import { RecipeResolver } from 'src/app/shared/guards/recipeResolver.service';
+import { RecipeGuard } from 'src/app/shared/guards/recipeGuard.service';
 
 const routes: Routes = [
   {
-    path: '', component: RecipesComponent, children: [
+    path: '', component: RecipesComponent,children: [
       { path: 'new', component: EditRecipeComponent },
-      { path: ':id/edit', component: EditRecipeComponent },
-      { path: ':id', component: RecipeDetailComponent}
+      { path: ':id/edit', component: EditRecipeComponent,canActivate:[RecipeGuard],resolve: [RecipeResolver] },
+      { path: ':id', component: RecipeDetailComponent,canActivate:[RecipeGuard], resolve: [RecipeResolver] }
     ]
   },
 ]
@@ -31,7 +34,9 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     FormsModule,
     ReactiveFormsModule,
-    RecipeEditModule
-  ]
+    RecipeEditModule,
+    DirectiveModules
+  ],
+  providers:[RecipeResolver, RecipeGuard]
 })
 export class RecipesModule { }

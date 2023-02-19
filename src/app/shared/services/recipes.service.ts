@@ -44,12 +44,13 @@ export class RecipeService {
     }
 
     addRecipe(recipe:Recipe){
-        let newRecipe = {
+        let newRecipe:Recipe = {
             ...recipe,
             id:this.recipes.length+1
         }
         this.recipes.push(newRecipe);
         this.recipeChanged.next(this.recipes);
+        console.log(this.recipes);
     }
 
     deleteRecipeById(id:number){
