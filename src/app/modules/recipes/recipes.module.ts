@@ -11,6 +11,7 @@ import { RecipeEditModule } from './edit-recipe/recipe-edit.module';
 import { DirectiveModules } from 'src/app/shared/directives';
 import { RecipeResolver } from 'src/app/shared/guards/recipeResolver.service';
 import { RecipeGuard } from 'src/app/shared/guards/recipeGuard.service';
+import { SharedModule } from 'src/app/shared/sharedModule.module';
 
 const routes: Routes = [
   {
@@ -30,7 +31,7 @@ const routes: Routes = [
     RecipeItemComponent
   ],
   imports: [
-    CommonModule,
+    SharedModule,
     RouterModule.forChild(routes),
     FormsModule,
     ReactiveFormsModule,

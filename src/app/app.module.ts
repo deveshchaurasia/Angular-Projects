@@ -16,6 +16,12 @@ import { AuthService } from './shared/services/auth.service';
 import { AuthGuard } from './shared/guards/auth-guard.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './shared/services/AuthInterceptor';
+import { AuthComponent } from './components/auth/auth.component';
+import { LoadingSpinnerComponent } from './shared/spinner/loading-spinner.component';
+import { AlertComponent } from './shared/alert/alert.component';
+import { PlaceholderDirective } from './shared/directives/placeholder.directive';
+import { SharedModule } from './shared/sharedModule.module';
+import { AuthModule } from './components/auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -31,10 +37,15 @@ import { AuthInterceptor } from './shared/services/AuthInterceptor';
     FormsModule,
     ReactiveFormsModule,
     DirectiveModules,
-    HttpClientModule
+    HttpClientModule,
+    SharedModule,
+    AuthModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   providers: [SpinnerService, AuthService, AuthGuard, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents:[
+    AlertComponent
+  ]
 })
 export class AppModule { }

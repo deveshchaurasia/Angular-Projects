@@ -64,7 +64,7 @@ export class ServersComponent implements OnInit {
   }
 
   login(){
-    this.authService.login();
+    this.authService.login(0);
     this.serverLoggedIn = true;
   }
   logout(){
