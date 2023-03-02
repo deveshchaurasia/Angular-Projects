@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebaseAPIKey: 'AIzaSyA67kvoC9VTNpHGJcYu3yw3uo4DnOGBuTU'
 };
 
 /*
@@ -14,3 +15,7 @@ export const environment = {
  * on performance if an error is thrown.
  */
 // import 'zone.js/plugins/zone-error';  // Included with Angular CLI.
+
+
+// Project Console: https://console.firebase.google.com/project/ng-course-recipe-book-30d11/overview
+// Hosting URL: https://ng-course-recipe-book-30d11.web.app
