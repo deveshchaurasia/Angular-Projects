@@ -1,5 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { StoreModule } from '@ngrx/store';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,6 +23,9 @@ import { AlertComponent } from './shared/alert/alert.component';
 import { PlaceholderDirective } from './shared/directives/placeholder.directive';
 import { SharedModule } from './shared/sharedModule.module';
 import { AuthModule } from './components/auth/auth.module';
+import { shoppingListReducer } from './store/reducers/shopping-list.reducer';
+import { authReducer } from './store/reducers/auth.reducer';
+import { appReducer } from './store/reducers';
 
 @NgModule({
   declarations: [
@@ -39,7 +43,12 @@ import { AuthModule } from './components/auth/auth.module';
     DirectiveModules,
     HttpClientModule,
     SharedModule,
-    AuthModule
+    AuthModule,
+    StoreModule.forRoot(appReducer)
+    // StoreModule.forRoot({
+    //   shoppingList: shoppingListReducer, 
+    //   auth:authReducer
+    // })
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   providers: [SpinnerService, AuthService, AuthGuard, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
