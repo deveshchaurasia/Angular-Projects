@@ -26,7 +26,7 @@ export function shoppingListReducer(state:IngredientState = initialState, action
         case ShoppingListActions.ADD_INGREDIENTS:
             return {
                 ...state,
-                ingredients:[...state.ingredients,...action.payload]
+                ingredients:[...state.ingredients, ...action.payload]
             };
                 // always add your data immutably in store state
         case ShoppingListActions.UPDATE_INGREDIENT:
