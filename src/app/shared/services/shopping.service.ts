@@ -1,7 +1,10 @@
 import { EventEmitter, Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
+import { Action } from 'rxjs/internal/scheduler/Action';
 import { Ingredient } from '../models/ingredient.model';
-
+import * as ShoppingListAction from '../../store/actions/shopping-list.actions'
+import * as fromRoot from '../../store/reducers';
 @Injectable({
   providedIn: 'root'
 })
@@ -14,7 +17,7 @@ export class ShoppingService {
   ingredientAdded = new Subject<Ingredient[]>();
   startedEditing = new Subject<number>();
 
-  constructor() { }
+  constructor(private store:Store<fromRoot.AppState>) { }
 
   getIngredients(){
     return this.ingredients.slice();
@@ -30,8 +33,9 @@ export class ShoppingService {
   }
 
   addIngredients(ingredients:Ingredient[]){
-    this.ingredients.push(...ingredients);
-    this.ingredientAdded.next(this.ingredients.slice());
+    this.store.dispatch(new ShoppingListAction.AddIngredients(ingredients));
+    // this.ingredients.push(...ingredients);
+    // this.ingredientAdded.next(this.ingredients.slice());
   }
 
   deleteIngredient(index:number){

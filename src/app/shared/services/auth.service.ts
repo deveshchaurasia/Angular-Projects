@@ -3,6 +3,10 @@ import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { BehaviorSubject, catchError, Subject, tap, throwError } from "rxjs";
 import { User } from "../models/user.model";
+import { environment } from "src/environments/environment";
+import { Store } from "@ngrx/store";
+import * as fromApp from "../../store/reducers";
+import * as AuthActions from "../../store/actions/auth.actions";
 
 export interface AuthResponseData {
     idToken: string;
@@ -18,8 +22,8 @@ export interface AuthResponseData {
 export class AuthService {
     loggedIn = false;
     private tokenExpirationTimer:any;
-    user = new BehaviorSubject<User>(null);
-    constructor(private http: HttpClient, private router:Router) { }
+    // user = new BehaviorSubject<User>(null);
+    constructor(private http: HttpClient, private router:Router, private store:Store<fromApp.AppState>) { }
 
     isAuthenticated() {
         const promise = new Promise((resolve, reject) => {
@@ -31,7 +35,7 @@ export class AuthService {
     }
 
     login(req) {
-        return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyA67kvoC9VTNpHGJcYu3yw3uo4DnOGBuTU',
+        return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key='+environment.firebaseAPIKey,
         {
             ...req,
             returnSecureToken:true
@@ -47,7 +51,8 @@ export class AuthService {
 
     logout() {
         this.loggedIn = false;
-        this.user.next(null);
+        // this.user.next(null);
+        this.store.dispatch(new AuthActions.Logout());
         this.router.navigate(['/auth']);
         localStorage.removeItem('userData');
         if(this.tokenExpirationTimer){
@@ -69,7 +74,8 @@ export class AuthService {
         const loadedUser = new User(userData.email, userData.id, userData._token, new Date(userData._tokenExpirationDate));
 
         if(loadedUser.token){
-            this.user.next(loadedUser);
+            // this.user.next(loadedUser);
+            this.store.dispatch(new AuthActions.AuthenticateSuccess({email:loadedUser.email, userId:loadedUser.id, token:loadedUser.token, expirationDate: new Date(userData._tokenExpirationDate)}));
             const expirationTime = new Date(userData._tokenExpirationDate).getTime()-new Date().getTime();
             this.autoLogout(expirationTime);
         }
@@ -82,7 +88,7 @@ export class AuthService {
     }
 
     signup(val) {
-        return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyA67kvoC9VTNpHGJcYu3yw3uo4DnOGBuTU',
+        return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key='+environment.firebaseAPIKey,
             {
                 email: val.email,
                 password: val.password,
@@ -106,7 +112,8 @@ export class AuthService {
             new Date().getTime() + +expiresIn * 1000
         );
         const user = new User(email, localId, token, expirationDate);
-        this.user.next(user);
+        // this.user.next(user);
+        this.store.dispatch(new AuthActions.AuthenticateSuccess({email:user.email, userId:user.id, token:user.token, expirationDate: expirationDate}));
         this.autoLogout(expiresIn*1000);
         localStorage.setItem('userData', JSON.stringify(user));
     }

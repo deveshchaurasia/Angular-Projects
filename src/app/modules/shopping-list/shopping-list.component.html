@@ -3,7 +3,7 @@
         <app-shopping-edit [ingredient]="selectedIngredient" (clearIngredient)="selectedIndex=-1" ></app-shopping-edit>
         <hr>
         <ul class="list-group">
-            <li class="list-group-item" [ngClass]="{'active':selectedIndex==i}" *ngFor="let ingredient of ingredients;let i=index" (click)="onSelect(i)"><a>{{i+1}}. {{ ingredient.name}} ({{ ingredient.amount }}) </a></li>
+            <li class="list-group-item" [ngClass]="{'active':selectedIndex==i}" *ngFor="let ingredient of (ingredients | async).ingredients; let i=index" (click)="onSelect(i)"><a>{{i+1}}. {{ ingredient.name}} ({{ ingredient.amount }}) </a></li>
         </ul>
     </div>
 </div>
