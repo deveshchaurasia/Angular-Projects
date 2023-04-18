@@ -11,7 +11,6 @@ export const STOP_EDIT = '[Shopping List] STOP_EDIT'
 
 export class AddIngredient implements Action{
     readonly type = ADD_INGREDIENT;   // readonly means it should not be changed from outside
-
     constructor(public payload:Ingredient){ }    
 }
 

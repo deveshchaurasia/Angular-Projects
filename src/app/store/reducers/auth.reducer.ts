@@ -17,7 +17,7 @@ export function authReducer(state=initialState, action:AuthActions) {
                 action.payload.userId, 
                 action.payload.token, 
                 action.payload.expirationDate
-                );
+            );
                 return {
                     ...state,
                     user:user,
